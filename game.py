@@ -1,3 +1,4 @@
+from binascii import Error
 """
   Un script python pour apprend le black Jack et le comptage Hi-Lo
 
@@ -160,10 +161,12 @@ print(f"ton capital est de : {capital_depart} $")
 while game_online == False: 
   try:
     mise = int(input("Combien voulez vous miser ? "))
-    if (type(mise) == int) and mise <= capital_depart:
+    if (type(mise) == int) and (mise <= capital_depart) and (mise > 0):
       game_online = True
+      break
     else:
-      print(f"{mise} est supérieur a ton capital")
+      print(f"{mise} est supérieur a ton capital ( ou inf a 0)")
+      mise = 0
   except ValueError:
     print("Désolé la valeur saisie n'est pas un nombre.")
 
@@ -184,10 +187,11 @@ while game_online: # si la mise est True on lance le jeu
   while mise == 0:  # si mise == 0 on demande une mise
     try:
       mise = int(input("Combien voulez vous miser ? "))
-      if (type(mise) == int) and mise <= capital_depart:
-        continue
+      if (type(mise) == int) and (mise <= capital_depart) and (mise > 0):
+        break
       else:
-        print(f"{mise} est supérieur a ton capital")
+        print(f"{mise} est supérieur a ton capital ou inf à zero)")
+        mise = 0
     except ValueError:
       print("Désolé la valeur saisie n'est pas un nombre.")
 
@@ -196,10 +200,15 @@ while game_online: # si la mise est True on lance le jeu
     Si le sabot est egal a zero , il faut lui mettre des cartes
     si il n'est pas egale a zero, la partie est en cours
   """
-  if len(shoe) == 0:
+  if len(shoe) < 50:
+    if (len(shoe) < 50) and (len(shoe) > 0):
+      print(f"Merci d'avoir patientez. Le croupier vient de recharger le sabot. Faite vos jeux.")
+    if (len(shoe) == 0):
+      print(f"Le croupier vient de charger le sabot. Faite vos jeux.")
     for i in range(24):
         for card in card_values.keys():
             shoe.append(card)
+
 
   print(f"Le sabot contient {len(shoe)} cartes")
 
@@ -228,12 +237,24 @@ while game_online: # si la mise est True on lance le jeu
   for card in player_cards + dealer_cards[1:]: 
       count += card_values[card]
 
-  # Afficher le total courant
-  read_count(count)
-  space()
-
   # Demander au joueur de choisir une action
   while True:
+      """
+        varirable de test blackjack
+        player_cards = ['K','A']
+      """
+      #si main du joueur blackjack
+      if sum([card_game[card] for card in player_cards]) == 21:
+        print(f"BLACKJACK BLACKJACK BLACKJACK BLACKJACK BLACKJACK BLACKJACK BLACKJACK ")
+        print(f"BLACKJACK BLACKJACK BLACKJACK BLACKJACK BLACKJACK BLACKJACK BLACKJACK ")
+        print(f"BLACKJACK BLACKJACK BLACKJACK BLACKJACK BLACKJACK BLACKJACK BLACKJACK ")
+        capital_depart += mise*2
+        space()
+        break
+      # Afficher le total courant
+      #read_count(count)
+      #space()
+      
       player_action = input("Voulez-vous tirer une carte (tapez 'h') ou rester (tapez 's') ? ")
 
       # Si le joueur choisit de tirer une carte
