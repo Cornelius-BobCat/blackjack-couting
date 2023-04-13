@@ -329,4 +329,5 @@ while game_online: # si la mise est True on lance le jeu
           game_online = False
           print(f"Vous avez tenu {step} tour(s) avant de vous faire RETK, bien joué :)")
         break
+#CORNELIUS VINCENT - BLACKJACK COUNTING HI-LO
       
