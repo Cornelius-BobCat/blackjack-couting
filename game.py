@@ -1,4 +1,3 @@
-from binascii import Error
 """
   Un script python pour apprend le black Jack et le comptage Hi-Lo
 
